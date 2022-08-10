@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     private let data: [AllAppsModel] = AllAppsModel.sampleApps()
-    var colors: [Color] = [.red, .green, .blue, .yellow]
+    var colors: [Color] = [.red, .green, .blue, .purples]
     private let adaptiveColumns = [
         GridItem(.adaptive(minimum: 170))
     ]
@@ -22,13 +22,16 @@ struct ContentView: View {
                         ZStack {
                             Rectangle()
                                 .frame(width: 170, height: 180)
-                                .foregroundColor(.yellow)
+                                .foregroundColor(colors.randomElement())
                                 .cornerRadius(30)
                             Text("\(item.name)")
                                 .foregroundColor(.white)
                                 .font(.system(.title, design: .rounded))
                                 .padding(8)
                                 .multilineTextAlignment(.center)
+                        }
+                        .onTapGesture {
+                            print(item.imageName)
                         }
                     }
                 }

@@ -11,15 +11,16 @@ struct AllAppsModel: Identifiable {
     let id = UUID().uuidString
     let name: String
     let imageName: String
+    
 }
 
 extension AllAppsModel {
     static func sampleApps() -> [AllAppsModel] {
         [
             AllAppsModel(name: "Restart", imageName: "restart"),
-            AllAppsModel(name: "Res", imageName: "restart"),
-            AllAppsModel(name: "Restart & som", imageName: "restart"),
-            AllAppsModel(name: "Restart & other", imageName: "restart"),
+            AllAppsModel(name: "Pinch & Zoom", imageName: "restart"),
+            AllAppsModel(name: "Some Other", imageName: "restart"),
+            AllAppsModel(name: "New app", imageName: "restart"),
         ]
     }
 }
