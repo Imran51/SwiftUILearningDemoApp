@@ -10,53 +10,69 @@ import SwiftUI
 struct ContentView: View {
     private let data: [AllAppsModel] = AllAppsModel.sampleApps()
     var colors: [Color] = [.red, .green, .blue, .purple]
-    
     private let adaptiveColumns = [
-        GridItem(.adaptive(minimum: 170))
+        GridItem(.adaptive(minimum: FrameHelper.size.width))
     ]
+    
+    struct FrameHelper {
+        static let size: CGSize = CGSize(width: 170, height: 170)
+        static let radius: CGFloat = 30
+        static let textPadding: CGFloat = 8
+    }
     
     @State private var appType: AppsType = .unknown
     @State private var tapped: Bool = false
-//    private func getDestination() {
-//
-//    }
+    @State private var isAnimating: Bool = false
+    
     
     var body: some View {
         NavigationView {
             ScrollView {
-//                NavigationLink("Pinch & Zoom", destination: )
-                LazyVGrid(columns: adaptiveColumns, spacing: 20) {
-                    ForEach(data, id: \.id) { item in
-                        ZStack {
-                            Rectangle()
-                                .frame(width: 170, height: 170)
-                                .foregroundColor(colors.randomElement())
-                                .cornerRadius(30)
-                            Image(item.imageName)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 170, height: 170)
-                            Text("\(item.name)")
-                                .foregroundColor(.white)
-                                .font(.system(.title, design: .rounded))
-                                .padding(8)
-                                .multilineTextAlignment(.center)
-                        }
-                        .onTapGesture {
-                            
-                            tapped = true
+                ZStack {
+                    LazyVGrid(columns: adaptiveColumns, spacing: 20) {
+                        ForEach(data, id: \.id) { item in
+                            ZStack {
+                                Rectangle()
+                                    .frame(width: FrameHelper.size.width, height: FrameHelper.size.height)
+                                    .foregroundColor(.clear)
+                                    .cornerRadius(FrameHelper.radius)
+                                Image(item.imageName)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: FrameHelper.size.width, height: FrameHelper.size.height)
+                                    .cornerRadius(FrameHelper.radius)
+                                Text("\(item.name)")
+                                    .foregroundColor(.black)
+                                    .font(.system(.title, design: .rounded))
+                                    .padding(FrameHelper.textPadding)
+                                    .multilineTextAlignment(.center)
+                            }
+                            .onTapGesture {
+                                appType = item.type
+                                tapped = true
+                            }
                         }
                     }
+                    .background(
+                        NavigationLink(destination: DestinationView(appType: appType), isActive: $tapped) {
+                            EmptyView()
+                        }
+                    )
                 }
-                .background(
-                    NavigationLink(destination: PinchAndZoomView(), isActive: $tapped) {
-                        EmptyView()
-                    }
-                )
+                .opacity(isAnimating ? 1 : 0)
+                .animation(.easeOut(duration: 1), value: isAnimating)
+                
             }
             .padding()
             .navigationTitle("All Apps")
             .navigationBarTitleDisplayMode(.inline)
+            .background(
+                Color("ColorBlue")
+                    .ignoresSafeArea(.all, edges: .all)
+            )
+            .onAppear {
+                isAnimating = true
+            }
         }
         .navigationViewStyle(.stack)
     }
@@ -65,5 +81,22 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+    }
+}
+
+struct DestinationView: View {
+    @State var appType: AppsType
+    
+    var body: some View {
+        switch appType {
+        case .pinchAndZoom:
+            return AnyView(PinchAndZoomView())
+        case .restart:
+            return AnyView(RestartView())
+        case .other:
+            return AnyView(PinchAndZoomView())
+        case .unknown:
+            return AnyView(PinchAndZoomView())
+        }
     }
 }

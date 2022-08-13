@@ -31,7 +31,8 @@ struct PinchAndZoomView: View {
     
     var body: some View {
         ZStack {
-            Color.clear
+            Color("ColorBlue")
+                .ignoresSafeArea(.all, edges: .all)
             
             Image(currentPage())
                 .resizable()
