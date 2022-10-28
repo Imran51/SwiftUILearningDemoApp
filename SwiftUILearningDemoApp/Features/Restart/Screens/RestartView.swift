@@ -17,6 +17,8 @@ struct RestartView: View {
                 HomeView()
             }
         }
+        .navigationTitle("Restart View")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 

@@ -171,6 +171,7 @@
 				7183E99728A43CB10020FB27 /* Utilities */,
 				71F5C8FD28A2D5F2007680EE /* Resources */,
 				71F5C8FC28A2D5E5007680EE /* Features */,
+				71F5C8FE28A2D606007680EE /* Main Screen */,
 				71F5C8F428A2BF72007680EE /* Preview Content */,
 			);
 			path = SwiftUILearningDemoApp;
@@ -189,7 +190,6 @@
 			children = (
 				7183E99A28A43CC60020FB27 /* Restart */,
 				7183E98828A42E8E0020FB27 /* Pinch & Zoom */,
-				71F5C8FE28A2D606007680EE /* Main Screen */,
 			);
 			path = Features;
 			sourceTree = "<group>";

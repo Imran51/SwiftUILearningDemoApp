@@ -83,8 +83,8 @@ struct PinchAndZoomView: View {
                         }
                 )
         }
-//            .navigationTitle("Pinch & Zoom")
-//            .navigationBarTitleDisplayMode(.inline)
+            .navigationTitle("Pinch & Zoom")
+            .navigationBarTitleDisplayMode(.inline)
 //            .navigationBarHidden(true)
         .onAppear {
             withAnimation(.linear(duration: 1)) {
